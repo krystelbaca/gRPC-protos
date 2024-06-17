@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  product-service:
+    build: ./product-service
+    ports:
+      - "50051:50051"
+
+  order-service:
+    build: ./order-service
+    ports:
+      - "50052:50052"
+    depends_on:
+      - product-service
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - product-service
+      - order-service
